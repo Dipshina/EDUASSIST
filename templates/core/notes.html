@@ -22,15 +22,15 @@ My Notes
                 <p class="menu-label">My Notes</p>
                 <ul class="menu-list">
                     {% for doc in documents %}
-                    <li><a href="{% url 'notes' %}?docid={{doc.id}}">{{doc.title}}</a></li>
+                    <li><a href="{% url 'notes' %}?docid={{ doc.id }}">{{ doc.title }}</a></li>
                     {% endfor %}
                 </ul>
             </aside>
         </div>
         <div class="column is-10">
             <form action="{% url 'notes' %}" method="POST">
-                {%csrf_token%}
-                <input type="hidden" name="docid" value="{{docid}}">
+                {% csrf_token %}
+                <input type="hidden" name="docid" value="{{ docid }}">
 
                 <div class="field">
                     <label class="label">
@@ -38,29 +38,27 @@ My Notes
 
                         {% if document %}
                         <span class="has-text-grey-light">
-                            Created at : {{document.created_at|date:"m/d Y"}} /
-                            Modified at : {{document.modified_at|date:"m/d Y"}}
+                            Created at : {{ document.created_at|date:"m/d Y" }} /
+                            Modified at : {{ document.modified_at|date:"m/d Y" }}
                         </span>
                         {% endif %}
                     </label>
                     <div class="control">
-                        <input type="test" class="input" name="title" placeholder="Title" {% if document %}
-                            value="{{ document.title }}" {%endif%}>
+                        <input type="text" class="input" name="title" placeholder="Title" {% if document %} value="{{ document.title }}" {% endif %}>
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label">
-                        Content
-                    </label>
+                    <label class="label">Content</label>
                     <div class="control">
-                        <textarea name="content" class="textarea"
-                            placeholder="Content">{% if document %}{{ document.content }}{%endif%}</textarea>
+                        <textarea name="content" class="textarea" placeholder="Content">{% if document %}{{ document.content }}{% endif %}</textarea>
                     </div>
                 </div>
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-primary">Save</button>
+                        <button class="button is-primary">
+                            {% if document %} Update {% else %} Save {% endif %}
+                        </button>
                     </div>
                     {% if document %}
                     <div class="control">

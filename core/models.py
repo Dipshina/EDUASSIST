@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 class TODO(models.Model):
     status_choices = [
         ('C', 'COMPLETED'),
@@ -17,6 +15,7 @@ class TODO(models.Model):
     ]
 
     title = models.CharField(max_length=50)
+    description = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=2, choices=status_choices)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
@@ -29,7 +28,7 @@ class TODO(models.Model):
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
-    content = models.TextField(blank=True,null=True)
+    content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -46,7 +45,6 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
     
-
 class StudyMaterials(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='study_materials')
     subject_choices = [

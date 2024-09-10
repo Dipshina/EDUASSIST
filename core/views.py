@@ -1,12 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, TODOForm
+from .forms import NoteForm, UserRegisterForm, UserUpdateForm, ProfileUpdateForm, TODOForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView 
 from .models import Note, Profile, TODO, StudyMaterials
-
-
-# Create your views here.
 
 def register(request):
     if request.method == 'POST':
@@ -14,12 +11,13 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Your Account has been created, You can Login Now!')
+            messages.success(request, f'Registration Successful!')
             return redirect('/login')
+        else:
+            messages.error(request, "There was an error with your registration.")
     else:
         form = UserRegisterForm()    
-    return render(request, 'core/register.html', {'form':form})
-
+    return render(request, 'core/register.html', {'form': form})
 
 @login_required
 def profile(request):
@@ -30,50 +28,52 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Your Account has been updated')
+            messages.success(request, 'Your account has been updated')
             return redirect('/profile')
+        else:
+            messages.error(request, "Please correct the error below.")
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
-        'u_form' : u_form,
-        'p_form' : p_form
+        'u_form': u_form,
+        'p_form': p_form
     }
 
     return render(request, 'core/profile.html', context)
 
 @login_required
 def todo(request):
-    if request.user.is_authenticated:
-        user = request.user
-        form = TODOForm()
-        todos = TODO.objects.filter(user=user).order_by('priority')
-        context = {
-            'form' : form,
-            'todos' : todos
-            }
-        return render(request, 'core/todo.html', context)
+    form = TODOForm()
+    todos = TODO.objects.filter(user=request.user).order_by('priority')
+    context = {
+        'form': form,
+        'todos': todos
+    }
+    return render(request, 'core/todo.html', context)
 
 @login_required
 def add_todo(request):
-    if request.user.is_authenticated:
-        user = request.user
+    if request.method == 'POST':
         form = TODOForm(request.POST)
-        context = {'form' : form}
         if form.is_valid():
             todo = form.save(commit=False)
-            todo.user = user
+            todo.user = request.user
             todo.save()
-            messages.success(request, f'ToDo Added Successfully')
+            messages.success(request, 'ToDo added successfully')
             return redirect("/to-dos")
         else:
-            return render(request, 'core/todo.html', context)
+            messages.error(request, "There was an error adding your ToDo.")
+    else:
+        form = TODOForm()
+
+    return render(request, 'core/todo.html', {'form': form})
 
 @login_required
 def delete_todo(request, id):
     TODO.objects.get(pk=id).delete()
-    messages.success(request, f'ToDo Deleted Successfully')
+    messages.success(request, 'ToDo deleted successfully')
     return redirect("/to-dos")
 
 @login_required
@@ -84,9 +84,12 @@ def edit_todo(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Changes saved')
-            return redirect('to-dos')  # Redirect to the to-dos page or wherever you want
+            return redirect('to-dos')
+        else:
+            messages.error(request, "There was an error saving changes.")
     else:
         form = TODOForm(instance=todo)
+    
     return render(request, 'core/edit_todo.html', {'form': form})
 
 @login_required
@@ -94,7 +97,7 @@ def change_todo(request, id, status):
     todo = TODO.objects.get(pk=id)
     todo.status = status
     todo.save()
-    messages.success(request, f'Status Changed Successfully')
+    messages.success(request, 'Status changed successfully')
     return redirect("/to-dos")
 
 @login_required
@@ -106,41 +109,49 @@ def notes(request):
     if request.method == 'POST':
         docid = int(request.POST.get('docid', 0))
         title = request.POST.get('title')
-        content = request.POST.get('content','')
+        content = request.POST.get('content', '')
+
+        if not title:
+            messages.error(request, "Please enter a title.")
+            return redirect('/notes/?docid=%i' % docid)
 
         if docid > 0:
-            document = Note.objects.get(pk=docid, user=user)
+            document = get_object_or_404(Note, pk=docid, user=user)
             document.title = title
             document.content = content
             document.save()
-            return redirect('/notes/?docid=%i' % docid)
+            messages.success(request, 'Note updated successfully')
         else:
             document = Note.objects.create(title=title, content=content, user=user)
-            return redirect('/notes/?docid=%i' % document.id)
+            messages.success(request, 'Note created successfully')
 
+        return redirect('/notes/?docid=%i' % document.id)
 
     if docid > 0:
-        document = Note.objects.get(pk=docid, user=user)
+        document = get_object_or_404(Note, pk=docid, user=user)
     else:
-        document = ''
+        document = None
 
     context = {
-        'docid':docid,
-        'documents':documents,
-        'document':document
+        'docid': docid,
+        'documents': documents,
+        'document': document
     }
     return render(request, 'core/notes.html', context)
+
+
 
 @login_required
 def delete_note(request, docid):
     user = request.user
     document = Note.objects.get(pk=docid, user=user)
     document.delete()
-    messages.success(request, f'Note Deleted Successfully')
+    messages.success(request, 'Note deleted successfully')
     return redirect('/notes/?docid=0')
 
 class StudyMaterialListView(ListView):
     model = StudyMaterials
+    context_object_name = 'materials'
 
 class StudyMaterialDetailView(DetailView):
     model = StudyMaterials 

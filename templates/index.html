@@ -17,31 +17,28 @@
     .bd-placeholder-img-lg {
       font-size: 3.5rem;
     }
-    .carousel-caption{
+    .carousel-caption {
       display: flex;
       justify-content: center;
       flex-direction: column-reverse;
     }
-    .heading{
-      padding-top: 0 !important; 
-
+    .heading {
+      padding-top: 0 !important;
     }
-   
   }
-  .col-lg-4{
+
+  .col-lg-4 {
     text-align: center;
   }
 
-  .carousel-caption{
-    /* background-color: none; */
+  .carousel-caption {
     color: white;
     position: static;
     height: 400px;
     display: flex;
     justify-content: center;
-    
-    
   }
+
   .carousel-indicators li {
     height: 10px;
     width: 10px;
@@ -49,20 +46,18 @@
     background-color: white;
   }
 
-  .heading{
+  .heading {
     width: 100%;
     padding-top: 150px;
   }
-  
 </style>
-<!--First Block-->
 
+<!--First Block-->
 <div class="container my-4 px-0">
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-    
-    <div class="carousel-inner">
+    <div class="carousel-inner" data-bs-interval="3000"> <!-- Shorter interval: 3000 milliseconds (3 seconds) -->
       <div class="carousel-item active">
-        <div class="carousel-caption" >
+        <div class="carousel-caption">
           <div class="heading" style="background-color:rgba(251,179,141,255)">
             <h3>Welcome to EduAssist!</h3>
             <p style="font-size: 20px;">Join us and simplify your life</p>
@@ -72,7 +67,7 @@
       </div>
 
       <div class="carousel-item">
-        <div class="carousel-caption" >
+        <div class="carousel-caption">
           <div class="heading" style="background-color:#8dadd6">
             <h3>When everything gets Digital</h3>
             <p style="font-size:20px">then why not your Notes</p>
@@ -104,87 +99,84 @@
     </a>
   </div>
 
-  <!--Second Block Starts-->
-
+  <!--Second Block Starts with AOS Animations-->
   <div class="row my-5">
-    <div class="col-lg-4" >
-      <img src="https://img.freepik.com/free-vector/flat-hand-drawn-time-management-illustration_23-2148835625.jpg" alt="" class="bd-placeholder-img rounded-circle" width="140"
-        height="140" aria-label="Placeholder: 140x140" focusable="false">
+    <div class="col-lg-4" data-aos="fade-up" data-aos-duration="1000">
+      <img src="https://img.freepik.com/free-vector/flat-hand-drawn-time-management-illustration_23-2148835625.jpg" alt="" class="bd-placeholder-img rounded-circle" width="140" height="140">
       <h2>Organize your task</h2>
       <p>Through EduAssist you can organize your task according to their priorities.</p>
     </div>
-    <div class="col-lg-4">
-      <img src="https://img.freepik.com/free-vector/hand-drawn-world-teachers-day_23-2148260451.jpg" alt="" class="bd-placeholder-img rounded-circle" width="140"
-        height="140" aria-label="Placeholder: 140x140" focusable="false">
+    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+      <img src="https://img.freepik.com/free-vector/hand-drawn-world-teachers-day_23-2148260451.jpg" alt="" class="bd-placeholder-img rounded-circle" width="140" height="140">
       <h2>Make notes</h2>
       <p>EduAssit will help you save your notes digitally. You can learn from your notes whenever you want.</p>
     </div>
-    <div class="col-lg-4">
-      <img src="https://img.freepik.com/free-vector/ebook-concept-illustration_114360-6612.jpg" alt="" class="bd-placeholder-img rounded-circle" width="140"
-        height="140" aria-label="Placeholder: 140x140" focusable="false">
+    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+      <img src="https://img.freepik.com/free-vector/ebook-concept-illustration_114360-6612.jpg" alt="" class="bd-placeholder-img rounded-circle" width="140" height="140">
       <h2>E-Books at Your Fingertips</h2>
       <p>Explore, read, and organize your e-books effortlessly with Eduassist.</p>
     </div>
   </div>
 
-  <!-- START THE FEATURETTES -->
-
+  <!-- Featurettes with AOS animation -->
   <hr class="featurette-divider">
 
-  <div class="row featurette">
+  <div class="row featurette" data-aos="fade-right" data-aos-duration="1000">
     <div class="col-md-7">
-      <h2 class="featurette-heading">Streamlined Lea<span class="text-muted">rning Experience</span>
-      </h2>
+      <h2 class="featurette-heading">Streamlined Lea<span class="text-muted">rning Experience</span></h2>
       <p class="lead">Say goodbye to scattered notes and distractions. EduAssist combines all your study resources into one intuitive platform, making learning easier and more focused.</p>
     </div>
     <div class="col-md-5">
-      <img src="https://img.freepik.com/free-vector/hand-drawn-flat-design-business-strategy-concept_23-2149149292.jpg" alt=""
-        class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500"
-        aria-label="Placeholder: 500x500" focusable="false">
+      <img src="https://img.freepik.com/free-vector/hand-drawn-flat-design-business-strategy-concept_23-2149149292.jpg" alt="" class="bd-placeholder-img featurette-image img-fluid mx-auto" width="500" height="500">
     </div>
   </div>
 
   <hr class="featurette-divider">
 
-  <div class="row featurette">
+  <div class="row featurette" data-aos="fade-left" data-aos-duration="1000">
     <div class="col-md-7 order-md-2">
       <h2 class="featurette-heading">Integrated Lea<span class="text-muted">rning Tool</span></h2>
       <p class="lead">From managing tasks to accessing e-books and taking notes, EduAssist offers a unified platform for all your learning needs. Simplify your study routine and boost productivity.</p>
     </div>
     <div class="col-md-5 order-md-1">
-      <img src="https://img.freepik.com/free-vector/man-working-computer-home_1308-98228.jpg" alt=""
-        class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500"
-        aria-label="Placeholder: 500x500" focusable="false">
+      <img src="https://img.freepik.com/free-vector/man-working-computer-home_1308-98228.jpg" alt="" class="bd-placeholder-img featurette-image img-fluid mx-auto" width="500" height="500">
     </div>
   </div>
+
   <hr class="featurette-divider">
 
-  <div class="row featurette">
+  <div class="row featurette" data-aos="zoom-in" data-aos-duration="1000">
     <div class="col-md-7">
-      <h2 class="featurette-heading">Feedback-Dri<span class="text-muted">ven Improvements</span>
-      </h2>
+      <h2 class="featurette-heading">Feedback-Dri<span class="text-muted">ven Improvements</span></h2>
       <p class="lead">EduAssist evolves based on real user feedback. We continuously refine our platform to ensure it meets the highest standards of usability and functionality.</p>
     </div>
     <div class="col-md-5">
-      <img src="https://img.freepik.com/free-vector/flat-design-innovation-concept_23-2149163765.jpg" alt=""
-        class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500"
-        aria-label="Placeholder: 500x500" focusable="false">
+      <img src="https://img.freepik.com/free-vector/flat-design-innovation-concept_23-2149163765.jpg" alt="" class="bd-placeholder-img featurette-image img-fluid mx-auto" width="500" height="500">
     </div>
   </div>
+
   <hr class="featurette-divider">
 
-  <!-- /END THE FEATURETTES -->
-  
-<!-- FOOTER -->
-<footer class="container">
-  <p class="float-end"><a href="#">Back to top</a></p>
-</footer>
-</main>
-<script src="/docs/5.0/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-</body>
-
-</html>
+  <!-- Footer -->
+  <footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+  </footer>
 </div>
+
+<!-- AOS Library CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+<!-- AOS and Custom JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  // Initialize AOS animations
+  AOS.init();
+
+  // Smooth scrolling to top
+  document.querySelector('.float-end a').addEventListener('click', function (e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
 
 {% endblock body %}
