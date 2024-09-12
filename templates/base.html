@@ -55,21 +55,21 @@
                 Profile
               {% endif %}            </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/profile">User Profile</a></li>
+              <li><a class="dropdown-item" href="/profile"><strong>User Profile</strong></a></li>
               {% if user.is_authenticated %}
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="{% url 'materials-list' %}">Study Materials</a></li>
-              <li><a class="dropdown-item" href="/notes">My Notes</a></li>
               <li><a class="dropdown-item" href="/to-dos">My Todos</a></li>
-              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+              <li><a class="dropdown-item" href="/notes">My Notes</a></li>
+              <li><a class="dropdown-item" href="{% url 'materials-list' %}">Study Materials</a></li>
+              <li><a class="dropdown-item" href="/logout"><strong>Logout</strong></a></li>
               {% else %}
-              <li><a class="dropdown-item" href="/login">Login</a></li>
+              <li><a class="dropdown-item" href="/login"><strong>Login</strong></a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="/register">Register</a></li>
+              <li><a class="dropdown-item" href="/register"><strong>Register</strong></a></li>
               {% endif %}
             </ul>
           </li>
