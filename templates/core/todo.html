@@ -1,18 +1,111 @@
-<!-- templates/core/todo.html -->
-
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
 {% block title %}
 My ToDos
 {% endblock title %}
 
 {% block body %}
-
-<div class="container pt-4">
+<style>
+    /* Center-align table header and data */
+    .table thead th, .table tbody td {
+      text-align: center;
+    }
+  
+    /* Ensure table is centered within its container */
+    .table {
+      margin: 0 auto;
+      border: 1px solid #4A6FA5; /* Outer border color matching navbar gradient */
+      border-collapse: separate; /* Separate borders for internal cells */
+      border-spacing: 0; /* Remove spacing between cells */
+      width: 100%; /* Ensure table takes full width */
+      border-radius: 5px; /* Optional: Rounded corners */
+      overflow: hidden; /* Ensure rounded corners are visible */
+    }
+  
+    /* Add padding to table cells */
+    .table th, .table td {
+      padding: 12px;
+    }
+  
+    /* Add alternating row colors for readability */
+    .table tbody tr:nth-child(odd) {
+      background-color: #e9ecef; /* Light grey for odd rows */
+    }
+  
+    .table tbody tr:hover {
+      background-color: #cfd8e1; /* Slightly darker grey for hover effect */
+    }
+  
+    /* Style table header */
+    .table thead th {
+      background-color: #24325F; /* Dark blue for header */
+      color: #ffffff; /* White text color */
+      font-weight: bold;
+    }
+  
+    /* Add styling for specific columns */
+    .description-column {
+      text-align: left; /* Align text to the left */
+      white-space: normal; /* Ensure long text wraps */
+      max-width: 200px; /* Adjust max-width to fit content better */
+      overflow: hidden; /* Hide overflow if text is too long */
+      text-overflow: ellipsis; /* Add ellipsis for long text */
+    }
+  
+    .due-date-column {
+      color: #4A6FA5; /* Blue color for due date */
+      font-weight: bold; /* Bold text */
+    }
+  
+    .action-column {
+      white-space: nowrap; /* Prevent wrapping of action icons */
+    }
+  
+    .action-icons {
+      display: flex; /* Align icons horizontally */
+      justify-content: center; /* Center icons */
+      gap: 10px; /* Space between icons */
+    }
+  
+    .action-icons a {
+      text-decoration: none; /* Remove underline from links */
+      color: inherit; /* Inherit color from parent */
+    }
+  
+    /* Responsive container styling */
+    .container-custom {
+      padding-left: 15px; /* Adjust as needed */
+      padding-right: 15px; /* Adjust as needed */
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 95%; /* Adjust as needed */
+    }
+  
+    /* Reduce space between elements */
+    .row {
+      margin-left: -15px; /* Adjust as needed */
+      margin-right: -15px; /* Adjust as needed */
+    }
+  
+    .col-lg-4,
+    .col {
+      padding-left: 15px; /* Adjust as needed */
+      padding-right: 15px; /* Adjust as needed */
+    }
+  
+    .shadow {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .table th, .table td {
+      vertical-align: middle;
+    }
+  </style>
+  
+<div class="container-custom pt-4">
     <div class="row p-0 mt-4 px-3 py-3">
         <!-- Add ToDos Form -->
-        <div class="col-lg-4 mx-auto shadow py-3">
+        <div class="col-lg-4 shadow py-3">
             <div class="alert-info alert text-center">
                 <h3>Add ToDos</h3>
             </div>
@@ -28,14 +121,10 @@ My ToDos
         <div class="col">
             <div class="border">
                 {% if todos|length == 0 %}
-                <div class="p-4">
-                    <br>
-                    <br>
-                    <div class="alert alert-info text-center my-0 p-1">
+                <div class="p-4 text-center">
+                    <div class="alert alert-info my-0 p-1">
                         <p class="my-2" style="font-size: 25px;">No ToDos</p>
                     </div>
-                    <br>
-                    <br>
                 </div>
                 {% else %}
                 <div>
@@ -44,11 +133,11 @@ My ToDos
                             <tr>
                                 <th>Sno.</th>
                                 <th>Title</th>
-                                <th>Description</th> <!-- Add this column -->
+                                <th class="description-column">Description</th>
                                 <th>Status</th>
                                 <th>Priority</th>
-                                <th>Due Date</th>
-                                <th>Action</th>
+                                <th class="due-date-column">Due Date</th>
+                                <th class="action-column">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,7 +145,7 @@ My ToDos
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ todo.title }}</td>
-                                <td>{{ todo.description|default:"N/A" }}</td> <!-- Display description -->
+                                <td class="description-column">{{ todo.description|default:"N/A" }}</td>
                                 <td>
                                     {% if todo.status == 'C' %}
                                     ✅
@@ -65,21 +154,23 @@ My ToDos
                                     {% endif %}
                                 </td>
                                 <td>{{ todo.priority }}</td>
-                                <td>
+                                <td class="due-date-column">
                                     {% if todo.due_date %}
-                                    {{ todo.due_date|date:"F d, Y H:i" }}
+                                    {{ todo.due_date|date:"M d, Y H:i" }}
                                     {% else %}
                                     N/A
                                     {% endif %}
                                 </td>
-                                <td>
-                                    <a href="{% url 'delete-todo' todo.id %}" title="Delete" class="">🗑️</a>
-                                    {% if todo.status == 'P' %}
-                                    <a href="{% url 'change-status' todo.id 'C' %}" title="Mark Completed" class="">✅</a>
-                                    {% else %}
-                                    <a href="{% url 'change-status' todo.id 'P' %}" title="Mark Pending" class="">🕒</a>
-                                    {% endif %}
-                                    <a href="{% url 'edit_todo' todo.id %}" title="Edit" class="">✏️</a>
+                                <td class="action-column">
+                                    <span class="action-icons">
+                                        <a href="{% url 'delete-todo' todo.id %}" title="Delete">🗑️</a>
+                                        {% if todo.status == 'P' %}
+                                        <a href="{% url 'change-status' todo.id 'C' %}" title="Mark Completed">✅</a>
+                                        {% else %}
+                                        <a href="{% url 'change-status' todo.id 'P' %}" title="Mark Pending">🕒</a>
+                                        {% endif %}
+                                        <a href="{% url 'edit_todo' todo.id %}" title="Edit">✏️</a>
+                                    </span>
                                 </td>
                             </tr>
                             {% endfor %}
