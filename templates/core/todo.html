@@ -97,11 +97,6 @@ My ToDos
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .table th, .table td {
-        vertical-align: middle;
-    }
-
-    /* Fixed height and scrolling for the form container */
     .form-container {
         max-height: 580px; /* Adjust as needed */
         overflow-y: auto;
@@ -175,7 +170,7 @@ My ToDos
                         </thead>
                         <tbody>
                             {% for todo in todos %}
-                            <tr onclick="window.location.href='{% url 'edit_todo' todo.id %}';" style="cursor: pointer;">
+                            <tr data-url="{% url 'edit_todo' todo.id %}" class="clickable-row">
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ todo.title }}</td>
                                 <td class="description-column">{{ todo.description|default:"N/A" }}</td>
@@ -237,6 +232,13 @@ My ToDos
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
+        });
+    });
+
+    // Redirect on row click
+    document.querySelectorAll('.clickable-row').forEach(row => {
+        row.addEventListener('click', function() {
+            window.location.href = this.getAttribute('data-url');
         });
     });
 </script>
