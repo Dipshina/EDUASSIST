@@ -6,84 +6,117 @@ Contact Us
 
 {% block body %}
 <style>
-  .my-container{
-      background-color:rgb(192, 215, 250);
-      padding: 2%;
-      height: max-content;
+  .my-container {
+      background-color: #e6f7ff; /* Match Profile background color */
+      padding: 3%;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
   }
-    .my-form{
+
+  .container-mine {
+      display: flex;
+      flex-direction: row;
+      background-color: #ffffff;
+      align-items: center;
+      padding: 2%;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 1200px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .my-form {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: space-evenly;
+      width: 60%;
+      margin-right: 20px;
+  }
+
+  .fields {
+      margin-bottom: 15px;
+  }
+
+  .form-control {
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      padding: 10px;
+  }
+
+  .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+  }
+
+  .btn-primary {
+      background-color: #007bff; /* Match Profile button color */
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+      background-color: #0056b3; /* Match Profile button hover color */
+  }
+
+  .my-img {
       width: 100%;
-      background-color: rgb(255,255, 255);
-      padding:20px
-    }
-    .fields{
-      width: 100%;
-    }
-    .container-mine{
-      display: flex;
-      flex-direction: row-reverse;
-      background-color: rgb(255,255, 255);
-      align-self: center;
-      padding:2%;
-      border-style: solid;
-      border-width: 1px;
-      border-radius: 10px;
-      width:90%;
-      
-    }
-    .form-control{
-      background-color:rgb(245, 243, 237);
-    }
-    .my-img{
-      width:100%;
       height: auto;
-    }
-    @media screen and (max-width:728px) {
-      .container-mine{
-        flex-direction: column-reverse;
-        justify-content: space-around;
+      max-width: 400px;
+      border-radius: 12px;
+  }
+
+  @media screen and (max-width: 768px) {
+      .container-mine {
+          flex-direction: column;
+          padding: 20px;
       }
-      .fields{
-        margin-top: 5px;
+
+      .my-form {
+          width: 100%;
+          margin-right: 0;
       }
-      .my-container{
-        padding-top: 4%;
+
+      .my-img {
+          margin-top: 20px;
       }
-    }
+  }
 </style>
 
 <div class="my-container">
   <div class="container-mine">
     <form class="my-form" method="POST" action="/contact">
-    <h1 class="text-center my-4" style="color: rgb(0,0,0);">Contact Us</h1>
-    {% csrf_token %}
-        <div class="fields">
-          <label for="inputname4" class="form-label"><b>Name</b></label>
-          <input type="text" class="form-control" name="name" id="inputname4" >
-        </div>
-        <div class="fields">
-          <label for="inputemail4" class="form-label"><b>Email Address</b></label>
-          <input type="email" class="form-control" name="email" id="inputemail4">
-        </div>
-        <div class="fields">
-            <label for="inputnumber4" class="form-label"><b>Phone No.</b></label>
-            <input type="number" class="form-control" name="contact" id="inputnumber4">
-          </div>
-        <div class="fields">
-            <label for="inputFormControlTextarea1" class="form-label"><b>Message</b></label>
-            <textarea class="form-control" name="desc" id="inputFormControlTextarea1" rows="3"></textarea>
-          </div>
-        <div class="fields">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-      <img class="my-img" src="https://img.freepik.com/free-vector/call-center-assistant-helping-customers_23-2148191563.jpg" alt="">
+      <h1 class="text-center mb-4" style="color: #333;">Contact Us</h1>
+      {% csrf_token %}
+      <div class="fields">
+        <label for="inputname4" class="form-label"><b>Name</b></label>
+        <input type="text" class="form-control" name="name" id="inputname4" required>
+      </div>
+      <div class="fields">
+        <label for="inputemail4" class="form-label"><b>Email Address</b></label>
+        <input type="email" class="form-control" name="email" id="inputemail4" required>
+      </div>
+      <div class="fields">
+        <label for="inputnumber4" class="form-label"><b>Phone No.</b></label>
+        <input type="tel" class="form-control" name="contact" id="inputnumber4" required>
+      </div>
+      <div class="fields">
+        <label for="inputFormControlTextarea1" class="form-label"><b>Message</b></label>
+        <textarea class="form-control" name="desc" id="inputFormControlTextarea1" rows="4" required></textarea>
+      </div>
+      <div class="fields">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    <img class="my-img" src="https://img.freepik.com/free-vector/call-center-assistant-helping-customers_23-2148191563.jpg" alt="Contact Us">
+  </div>
 </div>
-</div>
+
 {% endblock body %}

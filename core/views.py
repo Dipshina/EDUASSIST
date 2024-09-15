@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView 
 from .models import Note, Profile, TODO, StudyMaterials
 
+# Register view
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -19,6 +20,7 @@ def register(request):
         form = UserRegisterForm()    
     return render(request, 'core/register.html', {'form': form})
 
+# Profile view
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -43,6 +45,7 @@ def profile(request):
 
     return render(request, 'core/profile.html', context)
 
+# ToDo views
 @login_required
 def todo(request):
     form = TODOForm()
@@ -100,6 +103,7 @@ def change_todo(request, id, status):
     messages.success(request, 'Status changed successfully')
     return redirect("/to-dos")
 
+# Notes views
 @login_required
 def notes(request):
     user = request.user
@@ -139,8 +143,6 @@ def notes(request):
     }
     return render(request, 'core/notes.html', context)
 
-
-
 @login_required
 def delete_note(request, docid):
     user = request.user
@@ -149,10 +151,30 @@ def delete_note(request, docid):
     messages.success(request, 'Note deleted successfully')
     return redirect('/notes/?docid=0')
 
+# Updated StudyMaterialListView to handle categories
 class StudyMaterialListView(ListView):
     model = StudyMaterials
-    context_object_name = 'materials'
+    template_name = 'core/materials_list.html'
+    context_object_name = 'object_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get the list of categories from subject choices
+        categories = [choice[0] for choice in StudyMaterials.subject_choices]
+        selected_category = self.request.GET.get('category')
+        
+        # Filter materials by selected category if any
+        if selected_category:
+            context['object_list'] = StudyMaterials.objects.filter(subject=selected_category)
+        else:
+            context['object_list'] = StudyMaterials.objects.all()
+        
+        context['categories'] = categories
+        context['selected_category'] = selected_category
+        return context
 
 class StudyMaterialDetailView(DetailView):
-    model = StudyMaterials 
-    context_object_name = "studymaterial"
+    model = StudyMaterials
+    template_name = 'core/material_detail.html'
+    context_object_name = 'studymaterial'
+

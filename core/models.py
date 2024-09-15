@@ -44,20 +44,26 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
-    
+
 class StudyMaterials(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='study_materials')
+    
+    # List of categories/subjects for the dropdown
     subject_choices = [
-        ('Compiler', 'Compiler'),
-        ('MM', 'MM'),
-        ('Java', 'Java'),
-        ('SPM', 'SPM'),
-        ('BRM', 'BRM'),
+        ('IT', 'IT'),
+        ('Business Management', 'Business Management'),
+        ('Hotel Management', 'Hotel Management'),
+        ('Finance', 'Finance'),
+        ('Arts', 'Arts'),
+        ('Articles', 'Articles'),
     ]
+    
     title = models.CharField(max_length=200, blank=False)
     content = models.TextField(blank=False)
-    subject = models.CharField(max_length=50, choices=subject_choices)
+    subject = models.CharField(max_length=50, choices=subject_choices)  # The dropdown category field
     date_posted = models.DateTimeField(auto_now_add=True)
+    pdf_file = models.FileField(upload_to='study_materials/pdf_files/', null=True, blank=True)
 
     def __str__(self):
         return f'{self.title} - {self.subject}'
+

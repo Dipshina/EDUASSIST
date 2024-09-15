@@ -5,67 +5,107 @@ Profile
 {% endblock title %}
 
 {% block body %}
-
 <style>
+    .my-container {
+        background-color: #e6f7ff; /* Match Contact Us background color */
+        padding: 3%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
     .my-content-section {
-        padding:2%;
         background: #ffffff;
-        border: 1px solid #bbb4b4;
-        border-radius: 10px;
-        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: row;
-        width:90%;
-        align-self: center;
-        justify-content: space-evenly;
+        width: 90%;
+        max-width: 1200px;
+        padding: 20px;
+        margin: 20px 0;
     }
 
     .accImg {
         object-fit: cover;
-        width: 300px;
-        height: 300px;
+        width: 250px;
+        height: 250px;
         border-radius: 50%;
+        border: 5px solid #ddd;
+        cursor: pointer;
     }
 
     .account-heading {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
     }
-    .my-media{
-        width: 50%;
+
+    .my-media {
+        width: 40%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        padding-right: 20px;
     }
-    .media-body{
+
+    .media-body {
         text-align: center;
-        margin-top: 10%;
+        color: #666;
     }
-    .my-form{
-        margin-left: 5%;
-        width:70%;
+
+    .my-form {
+        width: 60%;
     }
-    .my-container{
-        display: flex;
-        justify-content: center;
-        height: 94vh;
-        background-color: rgb(218, 209, 218);
+
+    .my-form fieldset {
+        border: none;
+        padding: 0;
     }
-    @media screen and (max-width:728px) {
-        .my-content-section{
+
+    .my-form .form-group {
+        margin-bottom: 15px;
+    }
+
+    .my-form .btn {
+        background-color: #007bff; /* Match Contact Us button color */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .my-form .btn:hover {
+        background-color: #0056b3; /* Match Contact Us button hover color */
+    }
+
+    @media screen and (max-width: 768px) {
+        .my-content-section {
             flex-direction: column;
+            padding: 15px;
         }
-        .accImg{
-            width:200px;
+
+        .accImg {
+            width: 200px;
             height: 200px;
         }
-        .my-media{
+
+        .my-media {
+            width: 100%;
+            padding-right: 0;
+        }
+
+        .my-form {
             width: 100%;
         }
-        .my-form{
-            width: 90%;
-        }
-        .my-container{
+
+        .my-container {
             height: 100%;
             padding-top: 2%;
         }
@@ -75,7 +115,7 @@ Profile
 <div class="my-container">
     <div class="my-content-section">
         <div class="my-media">
-            <img class="accImg" src="{{ user.profile.image.url }}">
+            <img class="accImg" src="{{ user.profile.image.url }}" data-bs-toggle="modal" data-bs-target="#imageModal">
             <div class="media-body">
                 <h2 class="account-heading">{{ user.username }}</h2>
                 <p class="text-secondary">{{ user.email }}</p>
@@ -85,7 +125,7 @@ Profile
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">
-                  <b>Profile Info</b>  
+                  <b>Profile Info</b>
                 </legend>
                 {{ u_form |crispy }}
                 {{ p_form |crispy }}
@@ -95,6 +135,24 @@ Profile
             </div>
         </form>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Profile Image</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{ user.profile.image.url }}" class="img-fluid" alt="Profile Image">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock body %}
