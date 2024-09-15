@@ -1,3 +1,4 @@
+
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from .forms import NoteForm, UserRegisterForm, UserUpdateForm, ProfileUpdateForm, TODOForm
@@ -49,7 +50,7 @@ def profile(request):
 @login_required
 def todo(request):
     form = TODOForm()
-    todos = TODO.objects.filter(user=request.user).order_by('priority')
+    todos = TODO.objects.filter(user=request.user).order_by('due_date', '-priority')
     context = {
         'form': form,
         'todos': todos
@@ -177,4 +178,3 @@ class StudyMaterialDetailView(DetailView):
     model = StudyMaterials
     template_name = 'core/material_detail.html'
     context_object_name = 'studymaterial'
-
