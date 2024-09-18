@@ -12,7 +12,10 @@ Login User
       padding: 2%;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Ensures the container takes up full viewport height */
   }
+
   .container-mine {
       display: flex;
       flex-direction: row-reverse;
@@ -22,39 +25,43 @@ Login User
       border-radius: 10px;
       background-color: rgb(255, 255, 255);
       width: 90%;
+      max-width: 1200px; /* Ensures the container doesn’t exceed a certain width */
   }
+
   .my-form {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      width: 60%; /* Adjusted width to be closer to image */
+      width: 60%;
       padding: 15px;
   }
-  .fields {
-      width: 100%;
-  }
+
   .form-control {
       background-color: rgb(245, 243, 237);
-      width: calc(100% - 20px); /* Adjusted width to fit within padding */
       padding: 10px;
       font-size: 16px;
       margin-bottom: 10px; /* Adds spacing between fields */
   }
+
   .my-img {
-      width: 40%; /* Adjusted width of the image */
+      width: 40%;
       height: auto;
   }
-  @media screen and (max-width: 728px) {
+
+  @media screen and (max-width: 768px) {
       .container-mine {
           flex-direction: column-reverse;
-          justify-content: center;
+          padding: 10px;
       }
+
       .my-form {
           width: 100%;
           padding: 10px;
       }
+
       .my-img {
           width: 100%;
+          margin-top: 20px;
       }
   }
 </style>
